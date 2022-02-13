@@ -4,8 +4,8 @@
     Banco de horas
     <br>
     {% for registro_re in object_list %}
-        <a href="{% url 'update_hora_extra' registro_re.id%}">
-                {{ registro_re }}
+        <a href="{% url 'update_hora_extra_base' registro_re.id%}">
+                {{ registro_re }} <br>
         </a>
     {% endfor %}
 

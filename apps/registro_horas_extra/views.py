@@ -35,3 +35,14 @@ class HoraExtraNovo(CreateView):
         kwards = super(HoraExtraNovo, self).get_form_kwargs()
         kwards.update({'user': self.request.user})
         return kwards
+
+
+class HoraExtraEditBase(UpdateView):
+    model = RegistroHorasExtra
+    form_class = RegistroHoraExtraForm
+    success_url = reverse_lazy('list_hora_extra')
+
+    def get_form_kwargs(self):
+        kwards = super(HoraExtraEditBase, self).get_form_kwargs()
+        kwards.update({'user': self.request.user})
+        return kwards
