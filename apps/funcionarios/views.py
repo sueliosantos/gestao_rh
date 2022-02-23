@@ -1,9 +1,14 @@
+import io
+
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, DeleteView, CreateView
 from .models import Funcionario
-
+from django.views.generic.base import View
+"""from django.template.loader import get_template
+import xhtml2pdf.pisa as pisa
+"""
 
 class FuncionariosList(ListView):
     model = Funcionario
@@ -33,5 +38,37 @@ class FuncionarioNovo(CreateView):
         funcionario.user = User.objects.create(username=funcionario.nome.split(' ')[0] + funcionario.nome.split(' ')[1])
         funcionario.save()
         return super(FuncionarioNovo, self).form_valid(form)
-        
 
+
+class Render:
+    @staticmethod
+    def render(path: str, params: dict, filename: str):
+        pass
+
+        """ template = get_template(path)
+        html = template.render(params)
+
+        response = io.BytesIO()
+        pdf = pisa.pisaDocument(
+            io.BytesIO(html.encode("UTF-8")), response)
+
+        if not pdf.err:
+            response = HttpResponse(
+                response.getvalue(), content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment;filename=%s.pdf' % filename
+            return response
+        else:
+            return HttpResponse("Error Rendering PDF", status=400)
+"""
+
+
+class Pdf(View):
+    pass
+    """def get(self, request):
+        params = {
+            'today': 'Variavel today',
+            'sales': 'Variavel sales',
+            'request': request,
+        }
+        return Render.render('funcionarios/relatorio.html', params, 'myfile')
+"""
