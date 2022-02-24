@@ -1,4 +1,6 @@
 import io
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
 
 from django.contrib.auth.models import User
 from django.http import HttpResponse
@@ -72,3 +74,36 @@ class Pdf(View):
         }
         return Render.render('funcionarios/relatorio.html', params, 'myfile')
 """
+
+
+def pdf_reportlab(request):
+    # Create a file-like buffer to receive PDF data.
+    buffer = io.BytesIO()
+
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(200, 800, "RELATÓRIO DE FUNCIONÁRIO")
+
+    str_ = 'Nome: %s | Hora Extra: %.2f'
+
+    p.drawString(0, 790, '-' * 150)
+
+    funcionarios = Funcionario.objects.all()
+
+    y = 750
+
+    for funcionario in funcionarios:
+        p.drawString(10, y, str_ % (funcionario.nome, funcionario.total_horas_extra))
+        y -= 40
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+
+    # FileResponse sets the Content-Disposition header so that browsers
+    # present the option to save the file.
+    buffer.seek(0)
+    return FileResponse(buffer, as_attachment=True, filename='relatorio_funcionarios.pdf')
