@@ -5,10 +5,14 @@ from django.conf import settings
 from django.urls import include, path
 from rest_framework import routers
 from apps.core import views
+from apps.funcionarios.api.views import FuncionarioViewSet
+from apps.registro_horas_extra.api.views import RegistroHorasExtraViewSet
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
+router.register(r'api/funcionarios', FuncionarioViewSet)
+router.register(r'api/registro_hora_extra', RegistroHorasExtraViewSet)
 
 urlpatterns = [
     path('', include('apps.core.urls')),
