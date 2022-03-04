@@ -1,23 +1,31 @@
 {% extends 'base.html' %}
 
 {% block main %}
+  <br>
   <div class="row">
     <div class="col">
-      Column
+        <div class="card" style="width: 18rem;">
+           <h2>
+               <i class="fa fa-users" aria-hidden="true" style="font-size:48px;color:blue"></i>
+               <a href="{% url 'funcionario_list' %}">Empregados</a>
+           </h2>
+        </div>
     </div>
     <div class="col">
-     Olá {{ usuario.funcionario.nome }}
-      <a href="{% url 'funcionario_list' %}">Gerenciar funcionarios</a>
-      <a href="{% url 'list_departamentos' %}">Gerenciar departamentos</a>
-      <a href="{% url 'list_hora_extra' %}">Gerenciar banco de horas</a>
+        <div class="card" style="width: 18rem;">
+           <h2>
+               <i class="fa fa-hourglass" aria-hidden="true" style="font-size:48px;color:blue"></i>
+                <a href="{% url 'list_hora_extra' %}">Banco de horas</a>
+           </h2>
+        </div>
     </div>
     <div class="col">
-      <a href="{% url 'logout' %}">Logout</a>
-      {% if usuario.funcionario.empresa %}
-        <a href="{% url 'edit_empresa' usuario.funcionario.empresa.id %}">Editar empresa</a>
-      {% else %}
-        <a href="{% url 'create_empresa' %}">Criar empresa</a>
-      {% endif %}
+      <div class="card" style="width: 18rem;">
+           <h2>
+               <i class="fa fa-book" aria-hidden="true" style="font-size:48px;color:blue"></i>
+               <a href="{% url 'list_departamentos' %}">Departamentos</a>
+           </h2>
+        </div>
     </div>
   </div>
 {% endblock %}
